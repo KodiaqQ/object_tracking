@@ -24,7 +24,7 @@ def main():
         if not ret:
             break
 
-        frame = cv2.resize(frame, dsize=(640, 360))
+        frame = cv2.resize(frame, dsize=(1280, 720))
 
         key = cv2.waitKey(1) & 0xFF
 
