@@ -5,7 +5,8 @@ import os
 TYPES = {
     'mosse': cv2.TrackerMOSSE_create,
     'kcf': cv2.TrackerKCF_create,
-    'goturn': cv2.TrackerGOTURN_create
+    'goturn': cv2.TrackerGOTURN_create,
+    'csrt': cv2.TrackerCSRT_create
 }
 
 
