@@ -6,7 +6,7 @@ MAIN = (0, 0, 255)
 
 
 class Tracker:
-    def __init__(self, path, showResult=False, border=5):
+    def __init__(self, path, showResult=False, saveData=True, border=5):
         self.tracker = cv2.TrackerCSRT_create()
         self.path = path
         if not os.path.isdir(self.path):
@@ -14,6 +14,7 @@ class Tracker:
         self.show = showResult
         self.font = cv2.FONT_HERSHEY_COMPLEX_SMALL
         self.border = border
+        self.isSave = saveData
 
     def update(self, image, objectID, bbox):
         height, width, depth = image.shape
@@ -26,7 +27,8 @@ class Tracker:
         if success:
             bbox = [int(v) for v in box]
             xmin, ymin, xmax, ymax = bbox[0], bbox[1], bbox[0] + bbox[2], bbox[1] + bbox[3]
-            self.save(objectID, image, [ymin - self.border, ymax + self.border, xmin - self.border, xmax + self.border])
+            if self.isSave:
+                self.save(objectID, image, [ymin - self.border, ymax + self.border, xmin - self.border, xmax + self.border])
 
             if self.show:
                 cv2.rectangle(image, (xmin, ymin), (xmax, ymax), MAIN, 1)

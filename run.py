@@ -6,22 +6,23 @@ import cv2
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=str, required=True, help='Path to test video')
-    parser.add_argument('--output', type=str, required=True, help='Path to result video', default=None)
-    parser.add_argument('--path', type=str, required=True, help='Path save')
+    parser.add_argument('--output', type=str, help='Path to result video', default=None)
+    parser.add_argument('--path', type=str, default='images', help='Path save')
+    parser.add_argument('--saveData', type=bool, default=True, help='Save data or not')
     parser.add_argument('--id', help='Object ID to save', default='defaultID')
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-    tracker = Tracker(path=args.path, showResult=True, border=10)
+    tracker = Tracker(path=args.path, showResult=True, saveData=args.saveData, border=10)
     cap = cv2.VideoCapture(args.input)
     bbox = None
     objectID = args.id
 
     if args.output is not None:
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        out = cv2.VideoWriter('output.avi', fourcc, 30.0, (1280, 720))
+        out = cv2.VideoWriter(os.path.join(args.output, args.id + '.avi'), fourcc, 30.0, (1280, 720))
 
     while True:
         ret, frame = cap.read()
